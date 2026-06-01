@@ -31,6 +31,8 @@ Puedes cambiar la conexión con propiedades del sistema o variables de entorno:
 | `juegosretro.db.user` | `JUEGOSRETRO_DB_USER` | Usuario |
 | `juegosretro.db.password` | `JUEGOSRETRO_DB_PASSWORD` | Contraseña |
 
+> Nota: la URL JDBC usa `useSSL=false` porque está pensada para MySQL local. Si conectas a un servidor remoto, habilita SSL y actualiza la URL en `DatabaseConfig`.
+
 ## Ejecutar
 1. Abre el proyecto en NetBeans.
 2. Agrega el MySQL Connector/J al classpath del proyecto.
