@@ -1,22 +1,23 @@
 package juegosretro.session;
 
 import juegosretro.model.User;
+import java.util.concurrent.atomic.AtomicReference;
 
 public final class Session {
-    private static User currentUser;
+    private static final AtomicReference<User> currentUser = new AtomicReference<>();
 
     private Session() {
     }
 
     public static User getCurrentUser() {
-        return currentUser;
+        return currentUser.get();
     }
 
     public static void setCurrentUser(User user) {
-        currentUser = user;
+        currentUser.set(user);
     }
 
     public static void clear() {
-        currentUser = null;
+        currentUser.set(null);
     }
 }

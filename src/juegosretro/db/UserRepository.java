@@ -20,7 +20,7 @@ public class UserRepository {
         }
     }
 
-    public User createUser(String username, String password) throws SQLException {
+    public User createUser(String username, char[] password) throws SQLException {
         PasswordHasher.HashData hashData = PasswordHasher.hash(password);
         String sql = "INSERT INTO users (username, password_hash, password_salt) VALUES (?, ?, ?)";
         try (Connection connection = DatabaseManager.getConnection();
@@ -38,7 +38,7 @@ public class UserRepository {
         throw new SQLException("No se pudo crear el usuario.");
     }
 
-    public User authenticate(String username, String password) throws SQLException {
+    public User authenticate(String username, char[] password) throws SQLException {
         String sql = "SELECT id, username, password_hash, password_salt FROM users WHERE username = ?";
         try (Connection connection = DatabaseManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {

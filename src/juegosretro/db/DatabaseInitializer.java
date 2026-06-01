@@ -17,8 +17,8 @@ public final class DatabaseInitializer {
     private static void loadDriver() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException ignored) {
-            // Driver is loaded via classpath; error will surface on first connection attempt.
+        } catch (ClassNotFoundException ex) {
+            System.err.println("No se encontró el driver MySQL. Agrega el conector JDBC al classpath.");
         }
     }
 

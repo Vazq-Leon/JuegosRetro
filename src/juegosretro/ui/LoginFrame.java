@@ -9,6 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.sql.SQLException;
+import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -64,14 +65,13 @@ public class LoginFrame extends JFrame {
 
     private void handleLogin() {
         String username = usernameField.getText().trim();
-        String password = new String(passwordField.getPassword());
-
-        if (username.isBlank() || password.isBlank()) {
-            showError("Ingresa tu usuario y contraseña.");
-            return;
-        }
+        char[] password = passwordField.getPassword();
 
         try {
+            if (username.isBlank() || password.length == 0) {
+                showError("Ingresa tu usuario y contraseña.");
+                return;
+            }
             User user = userRepository.authenticate(username, password);
             if (user == null) {
                 showError("Usuario o contraseña inválidos.");
@@ -84,6 +84,8 @@ public class LoginFrame extends JFrame {
             });
         } catch (SQLException ex) {
             showError("No se pudo iniciar sesión. Revisa la conexión a la base de datos.");
+        } finally {
+            Arrays.fill(password, '\0');
         }
     }
 

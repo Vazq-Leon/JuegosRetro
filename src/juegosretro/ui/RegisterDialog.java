@@ -7,6 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.sql.SQLException;
+import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -77,19 +78,18 @@ public class RegisterDialog extends JDialog {
 
     private void handleRegister() {
         String username = usernameField.getText().trim();
-        String password = new String(passwordField.getPassword());
-        String confirm = new String(confirmField.getPassword());
-
-        if (username.isBlank() || password.isBlank()) {
-            showError("Completa todos los campos.");
-            return;
-        }
-        if (!password.equals(confirm)) {
-            showError("Las contraseñas no coinciden.");
-            return;
-        }
+        char[] password = passwordField.getPassword();
+        char[] confirm = confirmField.getPassword();
 
         try {
+            if (username.isBlank() || password.length == 0 || confirm.length == 0) {
+                showError("Completa todos los campos.");
+                return;
+            }
+            if (!Arrays.equals(password, confirm)) {
+                showError("Las contraseñas no coinciden.");
+                return;
+            }
             if (userRepository.usernameExists(username)) {
                 showError("El usuario ya existe. Usa otro nombre.");
                 return;
@@ -101,6 +101,9 @@ public class RegisterDialog extends JDialog {
             dispose();
         } catch (SQLException ex) {
             showError("No se pudo registrar. Revisa la conexión a la base de datos.");
+        } finally {
+            Arrays.fill(password, '\0');
+            Arrays.fill(confirm, '\0');
         }
     }
 

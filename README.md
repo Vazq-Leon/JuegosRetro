@@ -18,6 +18,8 @@ Proyecto Java con Swing que incluye login/registro, base de datos local y tres j
 - Contraseña: (vacía)
 - Puerto: `3306`
 
+> ⚠️ La contraseña vacía de `root` es solo para desarrollo local con XAMPP. En entornos reales define una contraseña segura y actualiza la configuración.
+
 ### Personalizar conexión
 Puedes cambiar la conexión con propiedades del sistema o variables de entorno:
 

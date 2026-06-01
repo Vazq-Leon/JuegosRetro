@@ -14,17 +14,17 @@ public final class PasswordHasher {
     private PasswordHasher() {
     }
 
-    public static HashData hash(String password) {
+    public static HashData hash(char[] password) {
         byte[] salt = new byte[SALT_LENGTH];
         new SecureRandom().nextBytes(salt);
-        byte[] hashed = pbkdf2(password.toCharArray(), salt);
+        byte[] hashed = pbkdf2(password, salt);
         return new HashData(encode(hashed), encode(salt));
     }
 
-    public static boolean verify(String password, String saltBase64, String expectedHashBase64) {
+    public static boolean verify(char[] password, String saltBase64, String expectedHashBase64) {
         byte[] salt = decode(saltBase64);
         byte[] expectedHash = decode(expectedHashBase64);
-        byte[] actualHash = pbkdf2(password.toCharArray(), salt);
+        byte[] actualHash = pbkdf2(password, salt);
         return MessageDigest.isEqual(expectedHash, actualHash);
     }
 

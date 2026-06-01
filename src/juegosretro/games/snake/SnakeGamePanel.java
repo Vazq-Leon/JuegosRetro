@@ -92,7 +92,13 @@ public class SnakeGamePanel extends JPanel {
     }
 
     private void spawnFood() {
-        while (true) {
+        if (snake.size() >= GRID_SIZE * GRID_SIZE) {
+            endGame();
+            return;
+        }
+        int attempts = 0;
+        int maxAttempts = GRID_SIZE * GRID_SIZE * 2;
+        while (attempts++ < maxAttempts) {
             Point candidate = new Point(random.nextInt(GRID_SIZE), random.nextInt(GRID_SIZE));
             boolean occupied = false;
             for (Point segment : snake) {
@@ -106,6 +112,7 @@ public class SnakeGamePanel extends JPanel {
                 return;
             }
         }
+        endGame();
     }
 
     private void endGame() {

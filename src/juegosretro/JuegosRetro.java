@@ -19,7 +19,7 @@ public class JuegosRetro {
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(
                         null,
-                        "No se pudo conectar a la base de datos.\\n" +
+                        "No se pudo conectar a la base de datos.\n" +
                                 "Verifica MySQL/XAMPP y el conector JDBC.",
                         "Error de conexión",
                         JOptionPane.ERROR_MESSAGE
