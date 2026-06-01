@@ -4,17 +4,30 @@
  */
 package juegosretro;
 
-/**
- *
- * @author vazqu
- */
+import juegosretro.db.DatabaseInitializer;
+import juegosretro.ui.LoginFrame;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 public class JuegosRetro {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        SwingUtilities.invokeLater(() -> {
+            try {
+                DatabaseInitializer.initialize();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "No se pudo conectar a la base de datos.\n" +
+                                "Verifica MySQL/XAMPP y el conector JDBC.",
+                        "Error de conexión",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+            new LoginFrame().setVisible(true);
+        });
     }
     
 }
